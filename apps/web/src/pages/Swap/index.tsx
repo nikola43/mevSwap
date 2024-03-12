@@ -91,24 +91,45 @@ export default function SwapPage({ className }: { className?: string }) {
   }
 
   return (
-    <ContainerPageWrapper>
-      <Trace page={InterfacePageName.SWAP_PAGE} shouldLogImpression>
-        <PageWrapper>
-          <LogoWrapper>
-            <Logo src={Wolfswap_logo_white} />
-          </LogoWrapper>
-          <Swap
-            className={className}
-            chainId={supportedChainId ?? ChainId.AVALANCHE}
-            disableTokenInputs={supportedChainId === undefined}
-            initialInputCurrencyId={parsedSwapState?.inputCurrencyId}
-            initialOutputCurrencyId={outputCurrencyId}
-          />
-          <NetworkAlert />
-        </PageWrapper>
-        {location.pathname === "/swap" && <SwitchLocaleLink />}
-      </Trace>
-    </ContainerPageWrapper>
+    <>
+      {!isMobile ?
+        <ContainerPageWrapper>
+          <Trace page={InterfacePageName.SWAP_PAGE} shouldLogImpression>
+            <PageWrapper>
+              <LogoWrapper>
+                <Logo src={Wolfswap_logo_white} />
+              </LogoWrapper>
+              <Swap
+                className={className}
+                chainId={supportedChainId ?? ChainId.AVALANCHE}
+                disableTokenInputs={supportedChainId === undefined}
+                initialInputCurrencyId={parsedSwapState?.inputCurrencyId}
+                initialOutputCurrencyId={outputCurrencyId}
+              />
+              <NetworkAlert />
+            </PageWrapper>
+            {location.pathname === "/swap" && <SwitchLocaleLink />}
+          </Trace>
+        </ContainerPageWrapper> : <Trace page={InterfacePageName.SWAP_PAGE} shouldLogImpression>
+          <PageWrapper>
+            <LogoWrapper>
+              <Logo src={Wolfswap_logo_white} />
+            </LogoWrapper>
+            <Swap
+              className={className}
+              chainId={supportedChainId ?? ChainId.AVALANCHE}
+              disableTokenInputs={supportedChainId === undefined}
+              initialInputCurrencyId={parsedSwapState?.inputCurrencyId}
+              initialOutputCurrencyId={outputCurrencyId}
+            />
+            <NetworkAlert />
+          </PageWrapper>
+          {location.pathname === "/swap" && <SwitchLocaleLink />}
+        </Trace>}
+
+    </>
+
+
   );
 }
 
