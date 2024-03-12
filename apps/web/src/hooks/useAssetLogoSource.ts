@@ -1,5 +1,5 @@
 import tokenLogoLookup from 'constants/tokenLogoLookup'
-import { isCelo, nativeOnChain } from 'constants/tokens'
+import { BRETT_BASE, isBase, isCelo, nativeOnChain } from 'constants/tokens'
 import { checkWarning, WARNING_LEVEL } from 'constants/tokenSafety'
 import { chainIdToNetworkName, getNativeLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import uriToHttp from 'lib/utils/uriToHttp'
@@ -51,6 +51,10 @@ function getInitialUrl(
 
   if (chainId && isCelo(chainId) && address === nativeOnChain(chainId).wrapped.address) {
     return celoLogo
+  }
+
+  if (chainId && isBase(chainId) && address === BRETT_BASE.address) {
+    return 'https://s2.coinmarketcap.com/static/img/coins/64x64/29743.png'
   }
 
   if (checksummedAddress) {

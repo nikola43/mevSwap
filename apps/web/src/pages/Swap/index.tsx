@@ -90,6 +90,14 @@ export default function SwapPage({ className }: { className?: string }) {
     outputCurrencyId = "0x4F94b8AEF08c92fEfe416af073F1Df1E284438EC";
   }
 
+  if (connectedChainId === ChainId.MAINNET) {
+    outputCurrencyId = "0x6982508145454Ce325dDbE47a25d4ec3d2311933";
+  }
+
+  if (connectedChainId === ChainId.BASE) {
+    outputCurrencyId = "0x532f27101965dd16442E59d40670FaF5eBB142E4";
+  }
+
   return (
     <>
       {!isMobile ?

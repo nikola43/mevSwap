@@ -259,6 +259,22 @@ export const WOLF_AVALANCHE = new Token(
   'Landwolf'
 )
 
+export const PEPE_MAINNET = new Token(
+  ChainId.MAINNET,
+  '0x6982508145454Ce325dDbE47a25d4ec3d2311933',
+  18,
+  'PEPE',
+  'Pepe'
+)
+
+export const BRETT_BASE = new Token(
+  ChainId.BASE,
+  '0x532f27101965dd16442E59d40670FaF5eBB142E4',
+  18,
+  'BRETT',
+  'Brett'
+)
+
 export const UNI: { [chainId: number]: Token } = {
   [ChainId.MAINNET]: new Token(ChainId.MAINNET, UNI_ADDRESSES[ChainId.MAINNET], 18, 'UNI', 'Uniswap'),
   [ChainId.GOERLI]: new Token(ChainId.GOERLI, UNI_ADDRESSES[ChainId.GOERLI], 18, 'UNI', 'Uniswap'),
@@ -357,6 +373,10 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
 
 export function isCelo(chainId: number): chainId is ChainId.CELO | ChainId.CELO_ALFAJORES {
   return chainId === ChainId.CELO_ALFAJORES || chainId === ChainId.CELO
+}
+
+export function isBase(chainId: number): chainId is ChainId.BASE {
+  return chainId === ChainId.BASE
 }
 
 function getCeloNativeCurrency(chainId: number) {
