@@ -138,7 +138,7 @@ const Navbar = ({ blur }: { blur: boolean }) => {
       <Nav>
         <Box display="flex" height="full" flexWrap="nowrap">
           <Box className={styles.leftSideContainer}>
-            <Box onClick={nativateToSwap} className={styles.logoContainer} marginRight="10">
+            <Box onClick={nativateToSwap} className={styles.logoContainer} marginRight="20">
               <WinterUni width="64px" height="64px" />
             </Box>
             <Box onClick={nativateToSwap} marginRight="10">
