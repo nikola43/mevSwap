@@ -55,7 +55,7 @@ import { getEnvName } from "utils/env";
 import { MICROSITE_LINK } from "utils/openDownloadApp";
 import { getCurrentPageFromLocation } from "utils/urlRoutes";
 import { getCLS, getFCP, getFID, getLCP, Metric } from "web-vitals";
-import { ChainId } from '@uniswap/sdk-core'
+import { ChainId } from "@uniswap/sdk-core";
 import {
   findRouteByPath,
   RouteDefinition,
@@ -86,20 +86,20 @@ const BodyWrapper = styled.div<{ bannerIsVisible?: boolean }>`
   background-size: cover;
 
   @media only screen and (max-width: ${({ theme }) =>
-    `${theme.breakpoint.md}px`}) {
+      `${theme.breakpoint.md}px`}) {
     min-height: calc(
       100vh -
         ${({ bannerIsVisible }) =>
-    bannerIsVisible ? UK_BANNER_HEIGHT_MD : 0}px
+          bannerIsVisible ? UK_BANNER_HEIGHT_MD : 0}px
     );
   }
 
   @media only screen and (max-width: ${({ theme }) =>
-    `${theme.breakpoint.sm}px`}) {
+      `${theme.breakpoint.sm}px`}) {
     min-height: calc(
       100vh -
         ${({ bannerIsVisible }) =>
-    bannerIsVisible ? UK_BANNER_HEIGHT_SM : 0}px
+          bannerIsVisible ? UK_BANNER_HEIGHT_SM : 0}px
     );
   }
 `;
@@ -118,20 +118,20 @@ const BodyWrapperMobile = styled.div<{ bannerIsVisible?: boolean }>`
   background: white;
 
   @media only screen and (max-width: ${({ theme }) =>
-    `${theme.breakpoint.md}px`}) {
+      `${theme.breakpoint.md}px`}) {
     min-height: calc(
       100vh -
         ${({ bannerIsVisible }) =>
-    bannerIsVisible ? UK_BANNER_HEIGHT_MD : 0}px
+          bannerIsVisible ? UK_BANNER_HEIGHT_MD : 0}px
     );
   }
 
   @media only screen and (max-width: ${({ theme }) =>
-    `${theme.breakpoint.sm}px`}) {
+      `${theme.breakpoint.sm}px`}) {
     min-height: calc(
       100vh -
         ${({ bannerIsVisible }) =>
-    bannerIsVisible ? UK_BANNER_HEIGHT_SM : 0}px
+          bannerIsVisible ? UK_BANNER_HEIGHT_SM : 0}px
     );
   }
 `;
@@ -175,15 +175,15 @@ const HeaderWrapper = styled.div<{
   z-index: ${Z_INDEX.dropdown};
 
   @media only screen and (max-width: ${({ theme }) =>
-    `${theme.breakpoint.md}px`}) {
+      `${theme.breakpoint.md}px`}) {
     top: ${({ bannerIsVisible }) =>
-    bannerIsVisible ? Math.max(UK_BANNER_HEIGHT_MD - scrollY, 0) : 0}px;
+      bannerIsVisible ? Math.max(UK_BANNER_HEIGHT_MD - scrollY, 0) : 0}px;
   }
 
   @media only screen and (max-width: ${({ theme }) =>
-    `${theme.breakpoint.sm}px`}) {
+      `${theme.breakpoint.sm}px`}) {
     top: ${({ bannerIsVisible }) =>
-    bannerIsVisible ? Math.max(UK_BANNER_HEIGHT_SM - scrollY, 0) : 0}px;
+      bannerIsVisible ? Math.max(UK_BANNER_HEIGHT_SM - scrollY, 0) : 0}px;
   }
 `;
 const ImgWolf = styled.img`
@@ -202,11 +202,12 @@ const ImgWolf = styled.img`
   } */
 `;
 export default function App() {
-  const { chainId } = useWeb3React()
+  const { chainId } = useWeb3React();
   const isLoaded = useFeatureFlagsIsLoaded();
   const [, setShouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
 
   const location = useLocation();
+  const currentPath = location.pathname;
   const { pathname } = location;
   const currentPage = getCurrentPageFromLocation(pathname);
 
@@ -273,14 +274,13 @@ export default function App() {
   }
   const isMobile = window.innerWidth < 904 ? 1 : 0;
 
-  let usedImage = WolfImage
+  let usedImage = WolfImage;
   if (chainId == ChainId.MAINNET) {
-    usedImage = PepeImage
+    usedImage = PepeImage;
   }
   if (chainId == ChainId.BASE) {
-    usedImage = BrettImage
+    usedImage = BrettImage;
   }
-
 
   return (
     <ErrorBoundary>
@@ -317,9 +317,7 @@ export default function App() {
           </HeaderWrapper>
 
           <BodyWrapperMobile bannerIsVisible={renderUkBannner}>
-            <div>
-              <ImgWolf src={usedImage} />
-            </div>
+            <div>{currentPath !== "/nft" && <ImgWolf src={usedImage} />}</div>
             <Suspense>
               <AppChrome />
             </Suspense>
@@ -394,11 +392,11 @@ function UserPropertyUpdater() {
     sendInitializationEvent(SharedEventName.APP_LOADED, pageLoadProperties);
     const sendWebVital =
       (metric: string) =>
-        ({ delta }: Metric) =>
-          sendAnalyticsEvent(SharedEventName.WEB_VITALS, {
-            ...pageLoadProperties,
-            [metric]: delta,
-          });
+      ({ delta }: Metric) =>
+        sendAnalyticsEvent(SharedEventName.WEB_VITALS, {
+          ...pageLoadProperties,
+          [metric]: delta,
+        });
     getCLS(sendWebVital("cumulative_layout_shift"));
     getFCP(sendWebVital("first_contentful_paint_ms"));
     getFID(sendWebVital("first_input_delay_ms"));
