@@ -1,24 +1,34 @@
-import { transparentize } from 'polished'
-import { ReactNode } from 'react'
-import { AlertTriangle } from 'react-feather'
-import styled, { css } from 'styled-components'
-import { Z_INDEX } from 'theme/zIndex'
+import { transparentize } from "polished";
+import { ReactNode } from "react";
+import { AlertTriangle } from "react-feather";
+import styled, { css } from "styled-components";
+import { Z_INDEX } from "theme/zIndex";
 
-import { AutoColumn } from '../Column'
+import { AutoColumn } from "../Column";
+
+export const ContainerPageWrapper = styled.div`
+  width: 800px;
+
+  @media screen and (max-width: 900px) {
+    width: auto;
+  }
+`;
 
 export const PageWrapper = styled.div`
-  padding: 68px 8px 0px;
+  padding: 20px 8px 0px;
   max-width: 480px;
   width: 100%;
 
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
+  @media only screen and (max-width: ${({ theme }) =>
+      `${theme.breakpoint.md}px`}) {
     padding-top: 48px;
   }
 
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
+  @media only screen and (max-width: ${({ theme }) =>
+      `${theme.breakpoint.sm}px`}) {
     padding-top: 20px;
   }
-`
+`;
 const isMobile = window.innerWidth < 904 ? 1 : 0;
 // Mostly copied from `AppBody` but it was getting too hard to maintain backwards compatibility.
 const SwapWrapperOuter = styled.main<{ isDark?: boolean }>`
@@ -30,7 +40,7 @@ const SwapWrapperOuter = styled.main<{ isDark?: boolean }>`
   padding-top: ${isMobile * 200}px;
 
   &:before {
-    content: ' ';
+    content: " ";
     display: flex;
     position: absolute;
     inset: 0;
@@ -43,15 +53,17 @@ const SwapWrapperOuter = styled.main<{ isDark?: boolean }>`
   &:hover {
     // border: 1px solid ${({ theme }) => theme.surface3};
   }
-`
+`;
 
-export const SwapWrapper = (props: React.ComponentProps<typeof SwapWrapperOuter>) => {
+export const SwapWrapper = (
+  props: React.ComponentProps<typeof SwapWrapperOuter>
+) => {
   return (
     <SwapWrapperOuter {...props}>
       <SwapWrapperInner>{props.children}</SwapWrapperInner>
     </SwapWrapperOuter>
-  )
-}
+  );
+};
 
 const SwapWrapperInner = styled.div`
   border-radius: 24px;
@@ -59,7 +71,7 @@ const SwapWrapperInner = styled.div`
   z-index: -1;
   padding: 8px;
   padding-top: 12px;
-`
+`;
 
 export const ArrowWrapper = styled.div<{ clickable: boolean }>`
   border-radius: 12px;
@@ -85,29 +97,29 @@ export const ArrowWrapper = styled.div<{ clickable: boolean }>`
           }
         `
       : null}
-`
+`;
 
 // styles
 export const Dots = styled.span`
   &::after {
     display: inline-block;
     animation: ellipsis 1.25s infinite;
-    content: '.';
+    content: ".";
     width: 1em;
     text-align: left;
   }
   @keyframes ellipsis {
     0% {
-      content: '.';
+      content: ".";
     }
     33% {
-      content: '..';
+      content: "..";
     }
     66% {
-      content: '...';
+      content: "...";
     }
   }
-`
+`;
 
 const SwapCallbackErrorInner = styled.div`
   background-color: ${({ theme }) => transparentize(0.9, theme.critical)};
@@ -125,7 +137,7 @@ const SwapCallbackErrorInner = styled.div`
     margin: 0;
     font-weight: 535;
   }
-`
+`;
 
 const SwapCallbackErrorInnerAlertTriangle = styled.div`
   background-color: ${({ theme }) => transparentize(0.9, theme.critical)};
@@ -136,7 +148,7 @@ const SwapCallbackErrorInnerAlertTriangle = styled.div`
   border-radius: 12px;
   min-width: 48px;
   height: 48px;
-`
+`;
 
 export function SwapCallbackError({ error }: { error: ReactNode }) {
   return (
@@ -144,9 +156,9 @@ export function SwapCallbackError({ error }: { error: ReactNode }) {
       <SwapCallbackErrorInnerAlertTriangle>
         <AlertTriangle size={24} />
       </SwapCallbackErrorInnerAlertTriangle>
-      <p style={{ wordBreak: 'break-word' }}>{error}</p>
+      <p style={{ wordBreak: "break-word" }}>{error}</p>
     </SwapCallbackErrorInner>
-  )
+  );
 }
 
 export const SwapShowAcceptChanges = styled(AutoColumn)`
@@ -155,7 +167,7 @@ export const SwapShowAcceptChanges = styled(AutoColumn)`
   padding: 12px;
   border-radius: 12px;
   margin-top: 8px;
-`
+`;
 
 export const SwapSection = styled.div`
   background-color: ${({ theme }) => theme.surface2};
@@ -181,7 +193,7 @@ export const SwapSection = styled.div`
     width: 100%;
     height: 100%;
     pointer-events: none;
-    content: '';
+    content: "";
     border: 1px solid ${({ theme }) => theme.surface2};
   }
   &:hover:before {
@@ -190,11 +202,11 @@ export const SwapSection = styled.div`
   &:focus-within:before {
     border-color: ${({ theme }) => theme.deprecated_stateOverlayPressed};
   }
-`
+`;
 
 export const OutputSwapSection = styled(SwapSection)`
   border-bottom: ${({ theme }) => `1px solid ${theme.surface1}`};
-`
+`;
 
 export const ArrowContainer = styled.div`
   display: inline-flex;
@@ -202,4 +214,4 @@ export const ArrowContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-`
+`;
