@@ -9,7 +9,7 @@ import PopupItem from './PopupItem'
 
 const MobilePopupWrapper = styled.div`
   position: absolute;
-  top: 100px;
+  top: 80px;
   max-width: 100%;
   margin: 0 auto;
   display: none;
