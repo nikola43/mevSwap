@@ -30,7 +30,7 @@ type BaseButtonProps = {
   altDisabledStyle?: boolean
 } & ButtonProps
 
-export const BaseButton = styled(RebassButton)<BaseButtonProps>`
+export const BaseButton = styled(RebassButton) <BaseButtonProps>`
   padding: ${({ padding }) => padding ?? '16px'};
   width: ${({ width }) => width ?? '100%'};
   line-height: 24px;
@@ -86,9 +86,9 @@ export const ButtonPrimary = styled(BaseButton)`
   }
   &:disabled {
     background-color: ${({ theme, altDisabledStyle, disabled }) =>
-      altDisabledStyle ? (disabled ? theme.accent1 : theme.surface3) : theme.surface3};
+    altDisabledStyle ? (disabled ? theme.accent1 : theme.surface3) : theme.surface3};
     color: ${({ altDisabledStyle, disabled, theme }) =>
-      altDisabledStyle ? (disabled ? theme.white : theme.neutral2) : theme.neutral2};
+    altDisabledStyle ? (disabled ? theme.white : theme.neutral2) : theme.neutral2};
     cursor: auto;
     box-shadow: none;
     border: 1px solid transparent;
@@ -106,7 +106,7 @@ export const SmallButtonPrimary = styled(ButtonPrimary)`
 
 const BaseButtonLight = styled(BaseButton)`
   background-color: ${({ theme }) => theme.orange};
-  color: ${({ theme }) => theme.black};
+  color: ${({ theme }) => theme.white};
   font-size: 20px;
   font-weight: 535;
 
@@ -525,7 +525,7 @@ const BaseThemeButton = styled.button<BaseThemeButtonProps>`
   }
 `
 
-interface ThemeButtonProps extends React.ComponentPropsWithoutRef<'button'>, BaseThemeButtonProps {}
+interface ThemeButtonProps extends React.ComponentPropsWithoutRef<'button'>, BaseThemeButtonProps { }
 type ThemeButtonRef = HTMLButtonElement
 
 export const ThemeButton = forwardRef<ThemeButtonRef, ThemeButtonProps>(function ThemeButton(

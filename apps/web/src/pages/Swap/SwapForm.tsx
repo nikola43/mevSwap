@@ -568,7 +568,7 @@ export function SwapForm({ disableTokenInputs = false, onCurrencyChange }: SwapF
               }}
               color={theme.black}
             >
-              <ArrowDown size="16" color={theme.black} />
+              <ArrowDown size="16" color={theme.white} />
             </ArrowContainer>
           </TraceEvent>
         </ArrowWrapper>

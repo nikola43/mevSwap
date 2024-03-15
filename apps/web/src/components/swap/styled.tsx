@@ -20,12 +20,12 @@ export const PageWrapper = styled.div`
   width: 100%;
 
   @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.md}px`}) {
+    `${theme.breakpoint.md}px`}) {
     padding-top: 48px;
   }
 
   @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.sm}px`}) {
+    `${theme.breakpoint.sm}px`}) {
     padding-top: 20px;
   }
 `;
@@ -177,7 +177,7 @@ export const SwapSection = styled.div`
   font-weight: 500;
   height: 120px;
   background-color: white;
-  border: 2px solid white;
+  border: 1px solid red;
   border-radius: 10px;
   box-shadow: 0 0 10px 0 gray;
   line-height: 20px;
@@ -205,7 +205,7 @@ export const SwapSection = styled.div`
 `;
 
 export const OutputSwapSection = styled(SwapSection)`
-  border-bottom: ${({ theme }) => `1px solid ${theme.surface1}`};
+  
 `;
 
 export const ArrowContainer = styled.div`
