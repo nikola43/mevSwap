@@ -189,7 +189,7 @@ const HeaderWrapper = styled.div<{
 const ImgWolf = styled.img`
   position: relative;
   left: 18px;
-  top: 145px;
+  top: 125px;
   z-index: 1000;
   width: 300px;
 
@@ -201,6 +201,23 @@ const ImgWolf = styled.img`
     display: none;
   } */
 `;
+
+const ImgWolfEth = styled.img`
+  position: relative;
+  left: 18px;
+  top: 170px;
+  z-index: 1000;
+  width: 300px;
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
+
+  /* @media screen and (min-width: ${({ theme }) => theme.breakpoint.md}px) {
+    display: none;
+  } */
+`;
+
 export default function App() {
   const { chainId } = useWeb3React();
   const isLoaded = useFeatureFlagsIsLoaded();
@@ -317,7 +334,16 @@ export default function App() {
           </HeaderWrapper>
 
           <BodyWrapperMobile bannerIsVisible={renderUkBannner}>
-            <div>{currentPath !== "/nft" && currentPath !== "/nft/" && <ImgWolf src={usedImage} />}</div>
+
+            {chainId === ChainId.MAINNET && (
+              <div>{currentPath !== "/nft" && currentPath !== "/nft/" && <ImgWolfEth src={usedImage} />}</div>
+            )}
+
+            {chainId !== ChainId.MAINNET && (
+              <div>{currentPath !== "/nft" && currentPath !== "/nft/" && <ImgWolf src={usedImage} />}</div>
+            )}
+
+
             <Suspense>
               <AppChrome />
             </Suspense>

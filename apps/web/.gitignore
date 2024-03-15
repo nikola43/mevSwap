@@ -23,6 +23,8 @@ schema.graphql
 # builds
 /build
 /dts
+build.zip
+/build.zip
 
 # misc
 .DS_Store
