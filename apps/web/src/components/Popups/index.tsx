@@ -8,7 +8,8 @@ import ClaimPopup from './ClaimPopup'
 import PopupItem from './PopupItem'
 
 const MobilePopupWrapper = styled.div`
-  position: relative;
+  position: absolute;
+  top: 100px;
   max-width: 100%;
   margin: 0 auto;
   display: none;
@@ -33,7 +34,7 @@ const MobilePopupInner = styled.div`
   }
 `
 
-const FixedPopupColumn = styled(AutoColumn)<{
+const FixedPopupColumn = styled(AutoColumn) <{
   drawerOpen: boolean
 }>`
   position: fixed;
