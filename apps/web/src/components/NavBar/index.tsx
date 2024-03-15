@@ -186,9 +186,4 @@ const Navbar = ({ blur }: { blur: boolean }) => {
   )
 }
 
-/*
-
-
-*/
-
 export default Navbar

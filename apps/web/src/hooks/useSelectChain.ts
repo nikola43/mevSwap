@@ -24,12 +24,15 @@ export default function useSelectChain() {
 
       try {
         await switchChain(connector, targetChain)
-        if (isSupportedChain(targetChain)) {
-          //searchParams.set('chain', CHAIN_IDS_TO_NAMES[targetChain])
-          //setSearchParams(searchParams)
-        }
+        // if (isSupportedChain(targetChain)) {
+        //   //searchParams.set('chain', CHAIN_IDS_TO_NAMES[targetChain])
+        //   //setSearchParams(searchParams)
+        // }
       } catch (error) {
-        if (!didUserReject(connection, error) && error.code !== -32002 /* request already pending */) {
+        console.error('Failed to switch networks', error)
+
+        // request already pending 
+        if (!didUserReject(connection, error) && error.code !== -32002) {
           // console.error('Failed to switch networks', error)
           dispatch(
             addPopup({
@@ -38,6 +41,7 @@ export default function useSelectChain() {
             })
           )
         }
+
       }
     },
     [connector, dispatch, searchParams, setSearchParams, switchChain]

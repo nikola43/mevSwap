@@ -43,7 +43,8 @@ export function useSwitchChain() {
               uniwalletWCV2ConnectConnection.connector,
               networkConnection.connector,
               deprecatedNetworkConnection.connector,
-            ].includes(connector) && (chainId != ChainId.AVALANCHE)
+            ].includes(connector)
+            //].includes(connector) && (chainId != ChainId.AVALANCHE)
           ) {
             await connector.activate(chainId)
           } else {
@@ -55,6 +56,7 @@ export function useSwitchChain() {
               nativeCurrency: info.nativeCurrency,
               blockExplorerUrls: [info.explorer],
             }
+            console.log('addChainParameter', addChainParameter)
             await connector.activate(addChainParameter)
           }
         } catch (error) {

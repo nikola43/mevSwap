@@ -71,16 +71,6 @@ export default function ChainSelectorRow({ disabled, targetChain, onSelectChain,
 
   const theme = useTheme()
 
-  console.log({
-    label,
-    chainInfo,
-    targetChain,
-    chainId,
-    active,
-    disabled,
-    isPending,
-  })
-
   return (
     <TraceEvent events={[BrowserEvent.onClick]} name={SharedEventName.ELEMENT_CLICKED} element={`${label}-selector`}>
       <Container

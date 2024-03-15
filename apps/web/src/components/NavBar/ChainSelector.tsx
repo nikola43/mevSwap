@@ -89,8 +89,6 @@ export const ChainSelector = ({ leftAlign }: { leftAlign?: boolean }) => {
     return [supported, unsupported]
   }, [showTestnets, walletSupportsChain])
 
-  console.log({ supportedChains })
-
   const ref = useRef<HTMLDivElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, () => setIsOpen(false), [modalRef])

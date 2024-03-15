@@ -49,9 +49,6 @@ export default function SwapPage({ className }: { className?: string }) {
     return queryParametersToSwapState(parsedQs);
   }, [parsedQs]);
 
-  console.log({
-    isMobile,
-  });
 
   const Logo = styled.img`
     scale: 0.2;
