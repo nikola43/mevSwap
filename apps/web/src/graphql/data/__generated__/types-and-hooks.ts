@@ -1250,6 +1250,7 @@ export enum SwapOrderStatus {
 
 export enum SwapOrderType {
   Dutch = 'DUTCH',
+  DutchV2 = 'DUTCH_V2',
   Limit = 'LIMIT'
 }
 

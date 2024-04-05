@@ -18,6 +18,8 @@ export type Scalars = {
   Bytes: any;
   /** 8 bytes signed integer */
   Int8: any;
+  /** A string representation of microseconds UNIX timestamp (16 digits) */
+  Timestamp: any;
 };
 
 export enum Aggregation_Interval {
