@@ -189,7 +189,7 @@ const HeaderWrapper = styled.div<{
 const ImgWolf = styled.img`
   position: relative;
   left: 18px;
-  top: 125px;
+  top: 35px;
   z-index: 1000;
   width: 300px;
 
@@ -205,7 +205,7 @@ const ImgWolf = styled.img`
 const ImgWolfEth = styled.img`
   position: relative;
   left: 18px;
-  top: 170px;
+  top: 75px;
   z-index: 1000;
   width: 300px;
 
