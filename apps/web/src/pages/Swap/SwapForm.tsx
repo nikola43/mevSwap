@@ -160,6 +160,7 @@ export function SwapForm({ disableTokenInputs = false, onCurrencyChange }: SwapF
     }
   }, [independentField, outputTokenHasTax, setSwapState, trade?.outputAmount])
 
+  
   const {
     wrapType,
     execute: onWrap,
