@@ -180,7 +180,7 @@ function useLineItem(props: SwapLineItemProps): LineItemData | undefined {
       return {
         Label: () => <Trans>Price impact</Trans>,
         TooltipBody: () => <Trans>The impact your trade has on the market price of this pool.</Trans>,
-        Value: () => (isPreview ? <Loading /> : <ColoredPercentRow percent={trade.priceImpact} estimate />),
+        Value: () => (isPreview ? <Loading /> : <ColoredPercentRow percent={trade.priceImpact.lessThan(0) ? new Percent('0') : trade.priceImpact} estimate />),
       }
     case SwapLineItemType.MAX_SLIPPAGE:
       return {

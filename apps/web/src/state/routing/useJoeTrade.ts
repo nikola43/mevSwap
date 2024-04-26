@@ -100,6 +100,17 @@ export function useJoeTrade(
         return { needsApprove: true, approveGasEstimateUSD: 0 }
     }
 
+    const parseToken = (token: TokenJoe) => {
+        return new Token(
+            token.chainId, 
+            token.address, 
+            token.decimals, 
+            token.symbol, 
+            token.name, 
+            false,
+        )
+    }
+
     const doSomething = async (trade: TradeJoe) => {
         if(provider && trade && account) {
             const { totalFeePct, feeAmountIn } = await trade.getTradeFee()
@@ -119,23 +130,8 @@ export function useJoeTrade(
             const blockNumber = await provider.getBlockNumber()
             const approveInfo = await getApproval(trade) 
             const est = await trade.estimateGas(provider.getSigner(), chainId as ChainIdJoe, totalFeePct).catch(e => {})
-            const tokenInput = trade.isNativeIn ? nativeOnChain(provider.network.chainId) : new Token(
-                provider.network.chainId, 
-                (trade.inputAmount.currency as TokenJoe).address, 
-                parseInt(trade.inputAmount.currency.decimals.toString()), 
-                trade.inputAmount.currency.symbol, 
-                undefined, 
-                false,
-            )
-            // console.log('besttrade', trade)
-            const tokenOutput = trade.isNativeOut ? nativeOnChain(provider.network.chainId) : new Token(
-                provider.network.chainId, 
-                (trade.outputAmount.currency as TokenJoe).address, 
-                parseInt(trade.outputAmount.currency.decimals.toString()), 
-                trade.outputAmount.currency.symbol, 
-                undefined, 
-                false,
-            )
+            const tokenInput = trade.isNativeIn ? nativeOnChain(provider.network.chainId) : parseToken(trade.inputAmount.currency as TokenJoe)
+            const tokenOutput = trade.isNativeOut ? nativeOnChain(provider.network.chainId) : parseToken(trade.outputAmount.currency as TokenJoe)
             const reserves:any[] = []
             for(const i in trade.quote.pairs) {
                 const _pair = trade.quote.pairs[i]
@@ -153,14 +149,14 @@ export function useJoeTrade(
             const routev2 = new Route(
                 trade.route.pairs.map((_pair, _index) => 
                     new Pair(
-                        CurrencyAmount.fromRawAmount(_pair.token0 as Token, reserves[_index].reserve0.toString()),
-                        CurrencyAmount.fromRawAmount(_pair.token1 as Token, reserves[_index].reserve1.toString()),
+                        CurrencyAmount.fromRawAmount(parseToken(_pair.token0), reserves[_index].reserve0.toString()),
+                        CurrencyAmount.fromRawAmount(parseToken(_pair.token1), reserves[_index].reserve1.toString()),
                     )
                 ),
                 tokenInput,
                 tokenOutput
             )
-            console.log("estimate", est?.toString(), priceETH)
+            // console.log("estimate", est?.toString(), priceETH)
             setTrade(new ClassicTrade({
                 quoteMethod: QuoteMethod.JOE_ROUTE,
                 gasUseEstimateUSD: est && priceETH ? Number(formatEther(est)) * priceETH : undefined,
