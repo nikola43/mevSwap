@@ -136,7 +136,9 @@
     "upgrade:rnw": "manypkg upgrade react-native-web",
     "upgrade:tamagui": "manypkg upgrade tamagui && manypkg upgrade @tamagui && manypkg upgrade tamagui-loader",
     "web": "yarn workspace @uniswap/interface",
-    "start": "yarn workspace @uniswap/interface start"
+    "dev": "yarn workspace @uniswap/interface start",
+    "build": "yarn workspace @uniswap/interface build:production",
+    "start": "yarn workspace @uniswap/interface serve"
   },
   "workspaces": [
     "apps/*",
