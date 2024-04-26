@@ -17,6 +17,7 @@ export enum QuoteMethod {
   ROUTING_API = 'ROUTING_API',
   QUICK_ROUTE = 'QUICK_ROUTE',
   CLIENT_SIDE_FALLBACK = 'CLIENT_SIDE_FALLBACK', // If client-side was used after the routing-api call failed.
+  JOE_ROUTE = 'JOE_ROUTE',
 }
 
 // This is excluded from `RouterPreference` enum because it's only used
@@ -180,6 +181,7 @@ export function isClassicQuoteResponse(data: URAQuoteResponse): data is URAClass
 export enum TradeFillType {
   Classic = 'classic', // Uniswap V1, V2, and V3 trades with on-chain routes
   UniswapX = 'uniswap_x', // off-chain trades, no routes
+  Joe = 'trader_joe',
   None = 'none', // for preview trades, cant be used for submission
 }
 
@@ -196,6 +198,8 @@ export class ClassicTrade extends Trade<Currency, Currency, TradeType> {
   requestId: string | undefined
   quoteMethod: QuoteMethod
   swapFee: SwapFeeInfo | undefined
+  original?: any
+  __priceImpact?: Percent
 
   constructor({
     gasUseEstimateUSD,
@@ -204,15 +208,19 @@ export class ClassicTrade extends Trade<Currency, Currency, TradeType> {
     quoteMethod,
     approveInfo,
     swapFee,
+    original,
+    priceImpact,
     ...routes
   }: {
     gasUseEstimateUSD?: number
     totalGasUseEstimateUSD?: number
     blockNumber?: string | null
+    priceImpact?: Percent
     requestId?: string
     quoteMethod: QuoteMethod
     approveInfo: ApproveInfo
     swapFee?: SwapFeeInfo
+    original?: any
     v2Routes: {
       routev2: V2Route<Currency, Currency>
       inputAmount: CurrencyAmount<Currency>
@@ -237,6 +245,8 @@ export class ClassicTrade extends Trade<Currency, Currency, TradeType> {
     this.quoteMethod = quoteMethod
     this.approveInfo = approveInfo
     this.swapFee = swapFee
+    this.original = original
+    this.__priceImpact = priceImpact
   }
 
   public get executionPrice(): Price<Currency, Currency> {
@@ -262,6 +272,11 @@ export class ClassicTrade extends Trade<Currency, Currency, TradeType> {
 
     return this.gasUseEstimateUSD
   }
+
+  // public get priceImpact(): Percent {
+  //   if(this.__priceImpact) return this.__priceImpact
+  //   return super.priceImpact
+  // }
 }
 
 export class DutchOrderTrade extends IDutchOrderTrade<Currency, Currency, TradeType> {

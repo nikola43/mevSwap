@@ -344,6 +344,10 @@ export function isClassicTrade(trade?: InterfaceTrade): trade is ClassicTrade {
   return trade?.fillType === TradeFillType.Classic
 }
 
+export function isJoeTrade(trade?: InterfaceTrade): trade is ClassicTrade {
+  return trade?.fillType === TradeFillType.Classic && trade?.quoteMethod === QuoteMethod.JOE_ROUTE
+}
+
 export function isPreviewTrade(trade?: InterfaceTrade): trade is PreviewTrade {
   return trade?.fillType === TradeFillType.None
 }
