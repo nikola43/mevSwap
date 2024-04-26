@@ -49,8 +49,8 @@ import { ArrowDown } from 'react-feather'
 import { useNavigate } from 'react-router-dom'
 import { Text } from 'rebass'
 import { useAppSelector } from 'state/hooks'
-import { InterfaceTrade, TradeState } from 'state/routing/types'
-import { isClassicTrade } from 'state/routing/utils'
+import { InterfaceTrade, TradeFillType, TradeState } from 'state/routing/types'
+import { isClassicTrade, isJoeTrade } from 'state/routing/utils'
 import { queryParametersToSwapState, useSwapActionHandlers } from 'state/swap/hooks'
 import { initialSwapState, SwapState, useSwapContext } from 'state/swap/SwapContext'
 import { useTheme } from 'styled-components'
@@ -62,6 +62,8 @@ import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { largerPercentValue } from 'utils/percent'
 import { computeRealizedPriceImpact, warningSeverity } from 'utils/prices'
 import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
+import { ChainId as ChainIdJoe } from "@traderjoe-xyz/sdk";
+import { LB_ROUTER_V21_ADDRESS } from '@traderjoe-xyz/sdk-v2'
 
 import { getIsReviewableQuote } from '.'
 import { OutputTaxTooltipBody } from './TaxTooltipBody'
@@ -315,8 +317,8 @@ export function SwapForm({ disableTokenInputs = false, onCurrencyChange }: SwapF
     (parsedAmounts[Field.INPUT]?.currency.isToken
       ? (parsedAmounts[Field.INPUT] as CurrencyAmount<Token>)
       : undefined),
-    isSupportedChain(chainId) ? UNIVERSAL_ROUTER_ADDRESS(chainId) : undefined,
-    trade?.fillType
+    isJoeTrade(trade) ? LB_ROUTER_V21_ADDRESS[chainId as number as ChainIdJoe] : isSupportedChain(chainId) ? UNIVERSAL_ROUTER_ADDRESS(chainId) : undefined,
+    isJoeTrade(trade) ? TradeFillType.Joe : trade?.fillType
   )
 
   const maxInputAmount: CurrencyAmount<Currency> | undefined = useMemo(

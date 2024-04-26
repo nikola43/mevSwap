@@ -52,9 +52,9 @@ export default function usePermit2Allowance(
   const { account } = useWeb3React()
   const token = amount?.currency
 
-  const { tokenAllowance, isSyncing: isApprovalSyncing } = useTokenAllowance(token, account, PERMIT2_ADDRESS)
-  const updateTokenAllowance = useUpdateTokenAllowance(amount, PERMIT2_ADDRESS)
-  const revokeTokenAllowance = useRevokeTokenAllowance(token, PERMIT2_ADDRESS)
+  const { tokenAllowance, isSyncing: isApprovalSyncing } = useTokenAllowance(token, account, spender ?? PERMIT2_ADDRESS)
+  const updateTokenAllowance = useUpdateTokenAllowance(amount, spender ?? PERMIT2_ADDRESS)
+  const revokeTokenAllowance = useRevokeTokenAllowance(token, spender ?? PERMIT2_ADDRESS)
   const isApproved = useMemo(() => {
     if (!amount || !tokenAllowance) return false
     return tokenAllowance.greaterThan(amount) || tokenAllowance.equalTo(amount)
@@ -65,8 +65,8 @@ export default function usePermit2Allowance(
   // until it has been re-observed. It wll sync immediately, because confirmation fast-forwards the block number.
   const [approvalState, setApprovalState] = useState(ApprovalState.SYNCED)
   const isApprovalLoading = approvalState !== ApprovalState.SYNCED
-  const isApprovalPending = useHasPendingApproval(token, PERMIT2_ADDRESS)
-  const isRevocationPending = useHasPendingRevocation(token, PERMIT2_ADDRESS)
+  const isApprovalPending = useHasPendingApproval(token, spender ?? PERMIT2_ADDRESS)
+  const isRevocationPending = useHasPendingRevocation(token, spender ?? PERMIT2_ADDRESS)
 
   useEffect(() => {
     if (isApprovalPending) {
@@ -104,10 +104,12 @@ export default function usePermit2Allowance(
     return (permitAllowance.greaterThan(amount) || permitAllowance.equalTo(amount)) && permitExpiration >= now
   }, [amount, now, permitAllowance, permitExpiration])
 
-  const shouldRequestApproval = !(isApproved || isApprovalLoading)
+  const shouldRequestApproval = tradeFillType === TradeFillType.Joe && !(isApproved || isApprovalLoading)
 
   // UniswapX trades do not need a permit signature step in between because the swap step _is_ the permit signature
   const shouldRequestSignature = tradeFillType === TradeFillType.Classic && !(isPermitted || isSigned)
+
+  console.log('permit', tradeFillType, shouldRequestApproval, shouldRequestSignature)
 
   const addTransaction = useTransactionAdder()
   const approveAndPermit = useCallback(async () => {

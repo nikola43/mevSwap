@@ -20,6 +20,7 @@ import { ThemedText } from 'theme/components/text'
 import { SignatureExpiredError } from 'utils/errors'
 import { getExplorerLink } from 'utils/getExplorerLink'
 import { ExplorerDataType } from 'utils/getExplorerLink'
+import { isJoeTrade } from 'state/routing/utils'
 
 import { ConfirmModalState } from '../ConfirmSwapModal'
 import { slideInAnimation, slideOutAnimation } from './animations'
@@ -228,7 +229,7 @@ function useStepContents(args: ContentArgs): Record<PendingConfirmModalState, Pe
         bottomLabel: revocationPending ? t`Pending...` : t`Proceed in your wallet`,
       },
       [ConfirmModalState.APPROVING_TOKEN]: {
-        title: t`Enable spending ${approvalCurrency?.symbol ?? 'this token'} on Uniswap`,
+        title: t`Enable spending ${approvalCurrency?.symbol ?? 'this token'} on ${isJoeTrade(trade) ? 'TraderJoe' : 'Uniswap'}`,
         subtitle: (
           <ExternalLink href="https://support.uniswap.org/hc/en-us/articles/8120520483085">
             <Trans>Why is this required?</Trans>
