@@ -18,5 +18,9 @@ export default function RouterLabel({ trade, color }: { trade: SubmittableTrade;
     return <ThemedText.BodySmall color={color}>Uniswap Client</ThemedText.BodySmall>
   }
 
+  if (trade.quoteMethod === QuoteMethod.JOE_ROUTE) {
+    return <ThemedText.BodySmall color={color}>TraderJoe Client</ThemedText.BodySmall>
+  }
+
   return <ThemedText.BodySmall color={color}>Uniswap API</ThemedText.BodySmall>
 }

@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import { ClassicTrade, InterfaceTrade, QuoteMethod, RouterPreference, TradeState } from 'state/routing/types'
 import { usePreviewTrade } from 'state/routing/usePreviewTrade'
 import { useRoutingAPITrade } from 'state/routing/useRoutingAPITrade'
+import { useJoeTrade } from 'state/routing/useJoeTrade'
 import { useRouterPreference } from 'state/user/hooks'
 
 import useAutoRouterSupported from './useAutoRouterSupported'
@@ -115,8 +116,24 @@ export function useDebouncedTrade(
     inputTax,
     outputTax
   )
+  const joeTradeResult = useJoeTrade(
+    chainId,
+    tradeType,
+    amountSpecified,
+    otherCurrency,
+    inputTax,
+    outputTax
+  )
 
-  return previewTradeResult.currentTrade && !routingApiTradeResult.currentTrade
+  return previewTradeResult.currentTrade && !routingApiTradeResult.currentTrade && !joeTradeResult.currentTrade
     ? previewTradeResult
-    : routingApiTradeResult
+    : (
+      !routingApiTradeResult.currentTrade || routingApiTradeResult.currentTrade && joeTradeResult.currentTrade && (
+        tradeType===TradeType.EXACT_INPUT
+        ? routingApiTradeResult.currentTrade.outputAmount.lessThan(joeTradeResult.currentTrade.outputAmount)
+        : routingApiTradeResult.currentTrade.inputAmount.greaterThan(joeTradeResult.currentTrade.inputAmount)
+      )
+      ? joeTradeResult
+      : routingApiTradeResult
+    )
 }

@@ -6,7 +6,7 @@ import { BigNumber } from 'ethers/lib/ethers'
 import { PermitSignature } from 'hooks/usePermitAllowance'
 import { useCallback } from 'react'
 import { InterfaceTrade, TradeFillType } from 'state/routing/types'
-import { isClassicTrade, isUniswapXTrade } from 'state/routing/utils'
+import { isClassicTrade, isJoeTrade, isUniswapXTrade } from 'state/routing/utils'
 import { useAddOrder } from 'state/signatures/hooks'
 import { UniswapXOrderDetails } from 'state/signatures/types'
 
@@ -20,6 +20,7 @@ import { currencyId } from '../utils/currencyId'
 import useTransactionDeadline from './useTransactionDeadline'
 import { useUniswapXSwapCallback } from './useUniswapXSwapCallback'
 import { useUniversalRouterSwapCallback } from './useUniversalRouter'
+import { useJoeRouterSwapCallback } from './useJoeRouter'
 
 export type SwapResult = Awaited<ReturnType<ReturnType<typeof useSwapCallback>>>
 
@@ -57,7 +58,7 @@ export function useSwapCallback(
   })
 
   const universalRouterSwapCallback = useUniversalRouterSwapCallback(
-    isClassicTrade(trade) ? trade : undefined,
+    isClassicTrade(trade) && !isJoeTrade(trade) ? trade : undefined,
     fiatValues,
     {
       slippageTolerance: allowedSlippage,
@@ -67,7 +68,14 @@ export function useSwapCallback(
     }
   )
 
-  const swapCallback = isUniswapXTrade(trade) ? uniswapXSwapCallback : universalRouterSwapCallback
+  const joeRouterSwapCallback = useJoeRouterSwapCallback(
+    isJoeTrade(trade) ? trade : undefined,
+    allowedSlippage,
+    deadline,
+    fiatValues
+  )
+
+  const swapCallback = isUniswapXTrade(trade) ? uniswapXSwapCallback : isJoeTrade(trade) ? joeRouterSwapCallback : universalRouterSwapCallback
 
   return useCallback(async () => {
     if (!trade) throw new Error('missing trade')
